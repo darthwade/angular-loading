@@ -4,29 +4,29 @@
   angular.module('darthwade.dwLoading', [])
 
     .value('dwLoadingOptions', {
-      active: false,
-      text: 'Loading...',
-      className: '',
-      overlay: true,
-      spinner: true,
+      active: false, // Defines current loading state
+      text: 'Loading...', // Display text
+      className: '', // Custom class, added to directive
+      overlay: true, // Display
+      spinner: true, // Display spinner
       spinnerOptions: {
-        lines: 12,            // The number of lines to draw
-        length: 7,            // The length of each line
-        width: 4,             // The line thickness
-        radius: 10,           // The radius of the inner circle
-        rotate: 0,            // Rotation offset
-        corners: 1,           // Roundness (0..1)
-        color: '#000',        // #rgb or #rrggbb
-        direction: 1,         // 1: clockwise, -1: counterclockwise
-        speed: 2,             // Rounds per second
-        trail: 100,           // Afterglow percentage
-        opacity: 1/4,         // Opacity of the lines
-        fps: 20,              // Frames per second when using setTimeout()
-        zIndex: 2e9,          // Use a high z-index by default
+        lines: 12, // The number of lines to draw
+        length: 7, // The length of each line
+        width: 4, // The line thickness
+        radius: 10, // The radius of the inner circle
+        rotate: 0, // Rotation offset
+        corners: 1, // Roundness (0..1)
+        color: '#000', // #rgb or #rrggbb
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        speed: 2, // Rounds per second
+        trail: 100, // Afterglow percentage
+        opacity: 1 / 4, // Opacity of the lines
+        fps: 20, // Frames per second when using setTimeout()
+        zIndex: 2e9, // Use a high z-index by default
         className: 'dw-spinner', // CSS class to assign to the element
-        top: 'auto',          // center vertically
-        left: 'auto',         // center horizontally
-        position: 'relative'  // element position
+        top: 'auto', // Center vertically
+        left: 'auto', // Center horizontally
+        position: 'relative' // Element position
       }
     })
 
@@ -34,7 +34,7 @@
       var self = this;
 
       /**
-       * Sets default options (@see `dwLoadingOptions`)
+       * Overrides default options
        * @param {object} options
        */
       self.setDefaultOptions = function (options) {
@@ -42,7 +42,7 @@
       };
 
       /**
-       * Activates spinner by key
+       * Activates loading state by key
        * @param {string} key
        */
       self.start = function (key) {
@@ -50,7 +50,7 @@
       };
 
       /**
-       * Deactivates spinner by key
+       * Deactivates loading state by key
        * @param {string} key
        */
       self.finish = function (key) {
@@ -59,7 +59,7 @@
     }])
 
     // Shortcut
-    .factory('$loading', ['dwLoading', function(dwLoading) {
+    .factory('$loading', ['dwLoading', function (dwLoading) {
       return dwLoading;
     }])
 
@@ -93,7 +93,7 @@
               scope.spinner.stop();
             }
           };
-          
+
           scope.$watch(attrs.dwLoadingOptions, function (options) {
             scope.finish();
 
