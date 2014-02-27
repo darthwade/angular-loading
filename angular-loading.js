@@ -36,7 +36,7 @@
       }
     })
 
-    .service('dwLoading', ['$rootScope', 'dwLoadingOptions', function ($rootScope, dwLoadingOptions) {
+    .service('dwLoading', ['$timeout', '$rootScope', 'dwLoadingOptions', function ($timeout, $rootScope, dwLoadingOptions) {
       var self = this;
 
       /**
@@ -52,7 +52,9 @@
        * @param {string} key
        */
       self.start = function (key) {
-        $rootScope.$broadcast('$dwLoadingStart', key);
+        $timeout(function() {
+          $rootScope.$broadcast('$dwLoadingStart', key);
+        });
       };
 
       /**
@@ -60,7 +62,9 @@
        * @param {string} key
        */
       self.finish = function (key) {
-        $rootScope.$broadcast('$dwLoadingFinish', key);
+        $timeout(function() {
+          $rootScope.$broadcast('$dwLoadingFinish', key);
+        });
       };
     }])
 
@@ -69,91 +73,95 @@
       return dwLoading;
     }])
 
-    .directive('dwLoading', ['$window', '$compile', 'dwLoadingOptions', function ($window, $compile, dwLoadingOptions) {
+    .directive('dwLoading', ['$rootScope', 'dwLoadingOptions', function ($rootScope, dwLoadingOptions) {
       return {
-        scope: true,
         link: function (scope, element, attrs) {
-          scope.spinner = null;
-          scope.key = attrs.dwLoading || false;
+          var spinner = null,
+            key = attrs.dwLoading || false,
+            options,
+            container,
+            body,
+            spinnerContainer,
+            text;
 
           /**
            * Starts spinner
            */
-          scope.start = function () {
-            if (scope.container) {
-              scope.container.addClass('dw-loading-active');
+          var start = function () {
+            if (container) {
+              container.addClass('dw-loading-active');
             }
-            if (scope.spinner) {
-              scope.spinner.spin(scope.spinnerContainer[0]);
+            if (spinner) {
+              spinner.spin(spinnerContainer[0]);
             }
           };
 
           /**
            * Stops spinner
            */
-          scope.finish = function () {
-            if (scope.container) {
-              scope.container.removeClass('dw-loading-active');
+          var finish = function () {
+            if (container) {
+              container.removeClass('dw-loading-active');
             }
-            if (scope.spinner) {
-              scope.spinner.stop();
+            if (spinner) {
+              spinner.stop();
             }
           };
 
-          scope.$watch(attrs.dwLoadingOptions, function (options) {
-            scope.finish();
+          scope.$watch(attrs.dwLoadingOptions, function (newOptions) {
+            finish();
 
-            scope.options = extend(true, {}, dwLoadingOptions, options);
+            options = extend(true, {}, dwLoadingOptions, newOptions);
 
             // Build template
-            var body = angular.element('<div></div>')
+            body = angular.element('<div></div>')
               .addClass('dw-loading-body');
-            scope.container = angular.element('<div></div>')
+            container = angular.element('<div></div>')
               .addClass('dw-loading')
               .append(body);
 
-            if (scope.options.overlay) {
-              scope.container.addClass('dw-loading-overlay');
+            if (options.overlay) {
+              container.addClass('dw-loading-overlay');
             }
-            if (scope.options.className) {
-              scope.container.addClass(scope.options.className);
+            if (options.className) {
+              container.addClass(options.className);
             }
-            if (scope.options.spinner) {
-              scope.spinnerContainer = angular.element('<div></div>')
+            if (options.spinner) {
+              spinnerContainer = angular.element('<div></div>')
                 .addClass('dw-loading-spinner');
-              body.append(scope.spinnerContainer);
-              scope.spinner = new Spinner(scope.options.spinnerOptions);
+              body.append(spinnerContainer);
+              spinner = new Spinner(options.spinnerOptions);
             }
-            if (scope.options.text) {
-              var text = angular.element('<div></div>')
+            if (options.text) {
+              text = angular.element('<div></div>')
                 .addClass('dw-loading-text')
-                .text(scope.options.text);
+                .text(options.text);
               body.append(text);
             }
 
-            element.append(scope.container);
+            element.append(container);
 //            $compile(container)(scope);
 
-            if (scope.options.active || !scope.key) {
-              scope.start();
+            if (options.active || !key) {
+              start();
             }
           }, true);
 
-          scope.$on('$dwLoadingStart', function (event, key) {
-            if (key === scope.key) {
-              scope.start();
+          $rootScope.$on('$dwLoadingStart', function (event, loadKey) {
+            if (loadKey === key) {
+              start();
             }
           });
 
-          scope.$on('$dwLoadingFinish', function (event, key) {
-            if (key === scope.key) {
-              scope.finish();
+          $rootScope.$on('$dwLoadingFinish', function (event, loadKey) {
+            if (loadKey === key) {
+              finish();
             }
           });
 
           scope.$on('$destroy', function () {
-            scope.finish();
-            scope.spinner = null;
+            finish();
+            spinner = null;
           });
         }
       };

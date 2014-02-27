@@ -4,11 +4,11 @@
 // https://github.com/vojtajina/grunt-bump
 module.exports = {
   options: {
-    files: ['package.json', 'bower.json'],
+    files: ['bower.json', 'package.json'],
     updateConfigs: [],
     commit: true,
     commitMessage: 'Release v%VERSION%',
-    commitFiles: ['package.json'], // '-a' for all files
+    commitFiles: ['bower.json', 'package.json'], // '-a' for all files
     createTag: true,
     tagName: 'v%VERSION%',
     tagMessage: 'Version %VERSION%',

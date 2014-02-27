@@ -1,3 +1,7 @@
+[dw-loading] {
+    position: relative;
+}
+
 .dw-loading {
     position: absolute;
     top: 0;
