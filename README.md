@@ -23,10 +23,11 @@ angular.module('myApp', ['darthwade.dwLoading']);
 ```
 
 ## 2. Usage
+Add `dw-loading` directive to that block which you want to lock during loading.
 ``` html
 <div dw-loading="key" dw-loading-options="options"></div>
 ```
-### Sample:
+## 3. Sample
 ``` html
 <div dw-loading="users" dw-loading-options="{text: 'Loading users...'}" class="users-list">
   <p ng-repeat="user in users">{{user.name}}</p>
@@ -51,13 +52,13 @@ function SampleCtrl($scope, $loading) {
 }
 ```
 
-## 3. Options
+## 4. Options
 ``` javascript
 {
   active: false, // Defines current loading state
   text: 'Loading...', // Display text
   className: '', // Custom class, added to directive
-  overlay: true, // Display
+  overlay: true, // Display overlay
   spinner: true, // Display spinner
   spinnerOptions: {
     lines: 12, // The number of lines to draw
@@ -81,33 +82,27 @@ function SampleCtrl($scope, $loading) {
 }
 ```
 
-## 4. API
+## 5. API
 This module provide service `dwLoading` (`$loading` just a shortcut).
 
-`dwLoading.setDefaultOptions(options)`
-@param {object} options
-Overrides default options.
+`dwLoading.setDefaultOptions(options)` - Overrides default options.
 
-`dwLoading.start(key)`
-@param {string} key
-Activates loading state by key.
+`dwLoading.start(key)` - Activates loading state by key.
 
-`dwLoading.finish(key)`
-@param {string} key
-Deactivates loading state by key.
+`dwLoading.finish(key)` - Deactivates loading state by key.
 
-## 4. Events
-`$dwLoadingStart`
-Fired once the loading is started. The '$rootScope' emits the event.
+## 6. Events
+`$dwLoadingStart` - Fired once the loading is started. The '$rootScope' emits the event.
 ``` javascript
 $scope.$on('$dwLoadingStart', function(event, key){ ... });
 ```
-`$dwLoadingFinish`
-Fired once the loading is finished. The '$rootScope' emits the event.
+
+`$dwLoadingFinish` - Fired once the loading is finished. The '$rootScope' emits the event.
 ``` javascript
 $scope.$on('$dwLoadingFinish', function(event, key){ ... });
 ```
-## 4. Styling
+
+## 7. Styling
 ``` html
 <div dw-loading="key" dw-loading-options="{className: 'custom-loading', spinnerOptions: {className: 'custom-spinner'}}" class="my-block">
   <p>Content</p>
