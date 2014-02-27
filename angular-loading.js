@@ -1,4 +1,10 @@
-(function (window, angular, undefined) {
+(function(root, factory) {
+  /* AMD module */
+  if (typeof define == 'function' && define.amd) define(['angular', 'spinjs'], factory)
+
+  /* Browser global */
+  else factory(window.angular, window.Spinner)
+}(this, function(angular, Spinner) {
   'use strict';
 
   angular.module('darthwade.dwLoading', [])
@@ -116,7 +122,7 @@
               scope.spinnerContainer = angular.element('<div></div>')
                 .addClass('dw-loading-spinner');
               body.append(scope.spinnerContainer);
-              scope.spinner = new $window.Spinner(scope.options.spinnerOptions);
+              scope.spinner = new Spinner(scope.options.spinnerOptions);
             }
             if (scope.options.text) {
               var text = angular.element('<div></div>')
@@ -203,4 +209,4 @@
     return dst;
   }
 
-})(window, window.angular);
+}));
