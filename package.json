@@ -16,7 +16,8 @@
     "grunt-newer": "~0.6.1",
     "grunt-contrib-watch": "~0.5.3",
     "jshint-stylish": "~0.1.5",
-    "time-grunt": "~0.2.9"
+    "time-grunt": "~0.2.9",
+    "grunt-shell": "~0.6.4"
   },
   "engines": {
     "node": ">=0.8.0"
