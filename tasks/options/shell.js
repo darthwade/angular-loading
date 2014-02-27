@@ -5,6 +5,6 @@ module.exports = {
     options: {
       stdout: true
     },
-    command: 'bower register angular-loading git://github.com/darthwade/angular-loading'
+    command: 'bower register angular-loading https://github.com/darthwade/angular-loading.git'
   }
 };

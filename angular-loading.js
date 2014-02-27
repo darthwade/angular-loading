@@ -7,7 +7,7 @@
       active: false, // Defines current loading state
       text: 'Loading...', // Display text
       className: '', // Custom class, added to directive
-      overlay: true, // Display
+      overlay: true, // Display overlay
       spinner: true, // Display spinner
       spinnerOptions: {
         lines: 12, // The number of lines to draw
