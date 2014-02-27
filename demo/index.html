@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+  <title>Angular Block Spinner</title>
+  <link rel="stylesheet" type="text/css" href="../angular-loading.css"/>
+  <style>
+    /* for testing purposes */
+    body {
+      margin:80px 10px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 18px;
+      color: #333333;
+      background-color: #ffffff;
+    }
+
+    .box {
+      padding:20px;
+      border:1px solid #000;
+      position:relative;
+    }
+
+    .small {
+      width:200px;
+      height:200px;
+    }
+
+    .medium {
+      width:500px;
+      height:350px;
+    }
+
+    .large {
+      width:600px;
+      height:500px;
+    }
+
+    .sample {
+      float: left;
+      width: 270px;
+    }
+
+    /* custom loader styles */
+    .custom-loading.dw-loading {
+      text-align: center;
+    }
+
+    .custom-loading.dw-loading.dw-loading-overlay {
+      background-color: rgba(0, 255, 255, .7);
+      z-index: 9999;
+    }
+
+    .custom-loading.dw-loading > .dw-loading-body > .dw-loading-text {
+      color: green;
+      font-size: 13px;
+      top: 45px;
+    }
+  </style>
+
+  <script type="text/javascript" src="../components/angular/angular.js"></script>
+  <script type="text/javascript" src="../components/spin.js/spin.js"></script>
+  <script type="text/javascript" src="../angular-loading.js"></script>
+  <script>
+    angular.module('demoApp', [
+          'darthwade.dwLoading'
+        ])
+
+        .controller('MainCtrl', function ($scope, $loading) {
+          $scope.startLoading = function (name) {
+            $loading.start(name);
+          };
+
+          $scope.finishLoading = function (name) {
+            $loading.finish(name);
+          };
+        })
+  </script>
+</head>
+<body ng-app="demoApp">
+<div ng-controller="MainCtrl">
+  <div class="sample sample-1">
+    <h2>Basic</h2>
+    <input type="button" value="Start Loading" ng-click="startLoading('sample-1')"/>
+    <input type="button" value="Finish Loading" ng-click="finishLoading('sample-1')"/>
+
+    <div class="box small" dw-loading="sample-1">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    </div>
+  </div>
+
+  <div class="sample sample-2">
+    <h2>Autoload</h2>
+    <input type="button" value="Start Loading" ng-click="startLoading('sample-2')"/>
+    <input type="button" value="Finish Loading" ng-click="finishLoading('sample-2')"/>
+
+    <div class="box small" dw-loading="sample-2" dw-loading-options="{active: true}">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    </div>
+  </div>
+
+  <div class="sample sample-3">
+    <h2>No text, no overlay</h2>
+    <input type="button" value="Start Loading" ng-click="startLoading('sample-3')"/>
+    <input type="button" value="Finish Loading" ng-click="finishLoading('sample-3')"/>
+
+    <div class="box small" dw-loading="sample-3" dw-loading-options="{active: true, text: false, overlay: false}">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    </div>
+  </div>
+
+  <div class="sample sample-4">
+    <h2>Custom styling, custom spinner, custom text</h2>
+    <input type="button" value="Start Loading" ng-click="startLoading('sample-4')"/>
+    <input type="button" value="Finish Loading" ng-click="finishLoading('sample-4')"/>
+
+    <div class="box small" dw-loading="sample-4" dw-loading-options="{active: true, text: 'Custom text', className: 'custom-loading', spinnerOptions: {lines: 12, length: 20, width: 6, radius: 20, color: '#f0f', direction: -1, speed: 3}}">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

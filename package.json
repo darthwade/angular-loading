@@ -1,0 +1,27 @@
+{
+  "name": "angular-loading",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/darthwade/angular-loading.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "load-grunt-tasks": "~0.4.0",
+    "grunt-contrib-uglify": "~0.3.2",
+    "load-grunt-config": "~0.7.1",
+    "grunt-bump": "0.0.13",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-newer": "~0.6.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "jshint-stylish": "~0.1.5",
+    "time-grunt": "~0.2.9"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}
