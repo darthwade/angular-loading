@@ -6,11 +6,6 @@ Angular directive that lets you to prevent user interaction with part of the pag
 
 **Demo:** http://embed.plnkr.co/XLL3li/preview
 
-Features include:
-- Installation of any WordPress version to specified directory
-- Configuration of wp-config.php
-- Fetch random salts for wp-config.php (https://api.wordpress.org/secret-key/1.1/salt/)
-
 ## Installation
 
 Using `bower`:
