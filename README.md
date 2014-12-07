@@ -1,12 +1,33 @@
 # Angular Loading
+[![Gittip](http://img.shields.io/gittip/darthwade.svg)](https://www.gittip.com/darthwade/)
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=darthwade&url=https://github.com/darthwade/angular-loading&title=Angular%20Loading&language=&tags=github&category=software) 
 
 Angular directive that lets you to prevent user interaction with part of the page and display loading/busy indicator (spinner based on spin.js)
 
 **Demo:** http://embed.plnkr.co/XLL3li/preview
 
-## 1. Getting Started
+Features include:
+- Installation of any WordPress version to specified directory
+- Configuration of wp-config.php
+- Fetch random salts for wp-config.php (https://api.wordpress.org/secret-key/1.1/salt/)
 
-Install with bower `bower install angular-loading --save` or clone the repo `git clone git://github.com/darthwade/angular-loading.git` or [download the latest release](https://github.com/darthwade/angular-loading/zipball/master).
+## Installation
+
+Using `bower`:
+```shell 
+$ bower install angular-loading --save
+```
+
+Using `git`:
+```shell 
+$ git clone https://github.com/darthwade/angular-loading.git
+```
+
+## Requirements & Dependencies
+- Angular
+- [Spin.js](https://github.com/fgnass/spin.js)
+
+## Usage
 
 Add `angular-loading.min.js` and `angular-loading.css` to your HTML. Also add [spin.js](https://github.com/fgnass/spin.js) library.
 ``` html
@@ -17,17 +38,18 @@ Add `angular-loading.min.js` and `angular-loading.css` to your HTML. Also add [s
 <link rel="stylesheet" type="text/css" href="//rawgithub.com/darthwade/angular-loading/master/angular-loading.css"/>
 ```
 
-Add `darthwade.dwLoading` as a module dependency for your module.
+Add `darthwade.loading` as a module dependency for your app.
 ``` javascript
-angular.module('myApp', ['darthwade.dwLoading']);
+angular.module('myApp', ['darthwade.loading']);
 ```
 
-## 2. Usage
 Add `dw-loading` directive to that block which you want to lock during loading.
 ``` html
 <div dw-loading="key" dw-loading-options="options"></div>
 ```
-## 3. Sample
+
+## Example
+
 ``` html
 <div dw-loading="users" dw-loading-options="{text: 'Loading users...'}" class="users-list">
   <p ng-repeat="user in users">{{user.name}}</p>
@@ -52,7 +74,8 @@ function SampleCtrl($scope, $loading) {
 }
 ```
 
-## 4. Options
+## Options
+
 ``` javascript
 {
   active: false, // Defines current loading state
@@ -82,27 +105,26 @@ function SampleCtrl($scope, $loading) {
 }
 ```
 
-## 5. API
-This module provide service `dwLoading` (`$loading` just a shortcut).
+## API
 
-`dwLoading.setDefaultOptions(options)` - Overrides default options.
+`$loading.setDefaultOptions(options)` - Overrides default options.
 
-`dwLoading.start(key)` - Activates loading state by key.
+`$loading.start(key)` - Activates loading state by key.
 
-`dwLoading.finish(key)` - Deactivates loading state by key.
+`$loading.finish(key)` - Deactivates loading state by key.
 
-## 6. Events
-`$dwLoadingStart` - Fired once the loading is started. The '$rootScope' emits the event.
+## Events
+`$loadingStart` - Fired once the loading is started. The '$rootScope' emits the event.
 ``` javascript
-$scope.$on('$dwLoadingStart', function(event, key){ ... });
+$scope.$on('$loadingStart', function(event, key){ ... });
 ```
 
-`$dwLoadingFinish` - Fired once the loading is finished. The '$rootScope' emits the event.
+`$loadingFinish` - Fired once the loading is finished. The '$rootScope' emits the event.
 ``` javascript
-$scope.$on('$dwLoadingFinish', function(event, key){ ... });
+$scope.$on('$loadingFinish', function(event, key){ ... });
 ```
 
-## 7. Styling
+## Styling
 ``` html
 <div dw-loading="key" dw-loading-options="{className: 'custom-loading', spinnerOptions: {className: 'custom-spinner'}}" class="my-block">
   <p>Content</p>
@@ -122,3 +144,25 @@ Will generate:
   </div>
 </div>
 ```
+
+## Testing
+```shell 
+$ git clone https://github.com/darthwade/angular-loading.git
+$ cd angular-loading
+$ vagrant up
+```
+
+## Contributing
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests and examples for any new or changed functionality.
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+## License
+
+Licensed under the MIT License. See the LICENSE file for details.
+
+Copyright (c) 2014 [Vadym Petrychenko](http://petrychenko.com/)

@@ -1,15 +1,27 @@
-(function(root, factory) {
-  /* AMD module */
-  if (typeof define == 'function' && define.amd) define(['angular', 'spinjs'], factory)
-
-  /* Browser global */
-  else factory(window.angular, window.Spinner)
-}(this, function(angular, Spinner) {
+/**
+ * Angular Loading
+ * @homepage https://github.com/darthwade/angular-loading
+ * @author Vadym Petrychenko https://github.com/darthwade
+ * @license The MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright 2014 Vadym Petrychenko
+ */
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['angular', 'spinjs'], factory);
+  } else if (typeof exports === 'object') {
+    // CommonJS
+    factory(require('angular'), require('spinjs'));
+  } else {
+    // Browser globals
+    factory(window.angular, window.Spinner)
+  }
+}(function (angular, Spinner) {
   'use strict';
 
-  angular.module('darthwade.dwLoading', [])
+  angular.module('darthwade.loading', [])
 
-    .value('dwLoadingOptions', {
+    .value('loadingOptions', {
       active: false, // Defines current loading state
       text: 'Loading...', // Display text
       className: '', // Custom class, added to directive
@@ -36,7 +48,7 @@
       }
     })
 
-    .service('dwLoading', ['$timeout', '$rootScope', 'dwLoadingOptions', function ($timeout, $rootScope, dwLoadingOptions) {
+    .service('$loading', ['$timeout', '$rootScope', 'loadingOptions', function ($timeout, $rootScope, loadingOptions) {
       var self = this;
 
       /**
@@ -44,7 +56,7 @@
        * @param {object} options
        */
       self.setDefaultOptions = function (options) {
-        extend(true, dwLoadingOptions, options);
+        extend(true, loadingOptions, options);
       };
 
       /**
@@ -53,7 +65,7 @@
        */
       self.start = function (key) {
         $timeout(function() {
-          $rootScope.$broadcast('$dwLoadingStart', key);
+          $rootScope.$broadcast('$loadingStart', key);
         });
       };
 
@@ -63,17 +75,12 @@
        */
       self.finish = function (key) {
         $timeout(function() {
-          $rootScope.$broadcast('$dwLoadingFinish', key);
+          $rootScope.$broadcast('$loadingFinish', key);
         });
       };
     }])
 
-    // Shortcut
-    .factory('$loading', ['dwLoading', function (dwLoading) {
-      return dwLoading;
-    }])
-
-    .directive('dwLoading', ['$rootScope', 'dwLoadingOptions', function ($rootScope, dwLoadingOptions) {
+    .directive('dwLoading', ['$rootScope', 'loadingOptions', function ($rootScope, loadingOptions) {
       return {
         link: function (scope, element, attrs) {
           var spinner = null,
@@ -111,7 +118,7 @@
           scope.$watch(attrs.dwLoadingOptions, function (newOptions) {
             finish();
 
-            options = extend(true, {}, dwLoadingOptions, newOptions);
+            options = extend(true, {}, loadingOptions, newOptions);
 
             // Build template
             body = angular.element('<div></div>')
@@ -147,13 +154,13 @@
             }
           }, true);
 
-          $rootScope.$on('$dwLoadingStart', function (event, loadKey) {
+          $rootScope.$on('$loadingStart', function (event, loadKey) {
             if (loadKey === key) {
               start();
             }
           });
 
-          $rootScope.$on('$dwLoadingFinish', function (event, loadKey) {
+          $rootScope.$on('$loadingFinish', function (event, loadKey) {
             if (loadKey === key) {
               finish();
             }
