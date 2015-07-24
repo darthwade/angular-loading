@@ -48,7 +48,7 @@
       }
     })
 
-    .service('$loading', ['$timeout', '$rootScope', 'loadingOptions', function ($timeout, $rootScope, loadingOptions) {
+    .service('$loading', ['$rootScope', 'loadingOptions', function ($rootScope, loadingOptions) {
       var self = this;
 
       /**
@@ -64,7 +64,7 @@
        * @param {string} key
        */
       self.start = function (key) {
-        $timeout(function() {
+        $rootScope.$evalAsync(function() {
           $rootScope.$broadcast('$loadingStart', key);
         });
       };
@@ -75,7 +75,7 @@
        * @param {object} options
        */
       self.update = function (key, options) {
-        $timeout(function() {
+        $rootScope.$evalAsync(function() {
           $rootScope.$broadcast('$loadingUpdate', key, options);
         });
       };
@@ -85,7 +85,7 @@
        * @param {string} key
        */
       self.finish = function (key) {
-        $timeout(function() {
+        $rootScope.$evalAsync(function() {
           $rootScope.$broadcast('$loadingFinish', key);
         });
       };
