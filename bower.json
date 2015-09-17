@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://github.com/darthwade/angular-loading.git"
   },
-  "main": "./angular-loading.js",
+  "main": ["./angular-loading.js", "./angular-loading.css"],
   "ignore": [
     ".idea",
     "node_modules",
