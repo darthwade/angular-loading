@@ -123,7 +123,7 @@
                 options = extend(true, {}, loadingOptions, newOptions);
 
                 // Build template
-                body = angular.element('<div></div>')
+                body = body || angular.element('<div></div>')
                   .addClass('dw-loading-body');
                 container = angular.element('<div></div>')
                   .addClass('dw-loading')
@@ -136,15 +136,15 @@
                   container.addClass(options.className);
                 }
                 if (options.spinner) {
-                  spinnerContainer = angular.element('<div></div>')
+                  spinnerContainer = spinnerContainer || angular.element('<div></div>')
                     .addClass('dw-loading-spinner');
                   body.append(spinnerContainer);
                   spinner = new Spinner(options.spinnerOptions);
                 }
                 if (options.text) {
-                  text = angular.element('<div></div>')
+                  text = text|| angular.element('<div></div>')
                     .addClass('dw-loading-text')
-                    .text(options.text);
+                  text.text(options.text);
                   body.append(text);
                 }
                 
