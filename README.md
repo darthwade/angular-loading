@@ -77,6 +77,7 @@ function SampleCtrl($scope, $loading) {
   text: 'Loading...', // Display text
   className: '', // Custom class, added to directive
   overlay: true, // Display overlay
+  threshold: 0,  // Time to wait before showing the loader (in ms)
   spinner: true, // Display spinner
   spinnerOptions: {
     lines: 12, // The number of lines to draw
