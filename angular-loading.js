@@ -48,7 +48,7 @@
       }
     })
 
-    .service('$loading', ['$timeout', '$rootScope', 'loadingOptions', function ($timeout, $rootScope, loadingOptions) {
+    .service('$loading', ['$rootScope', 'loadingOptions', function ($rootScope, loadingOptions) {
       var self = this;
 
       /**
@@ -64,8 +64,19 @@
        * @param {string} key
        */
       self.start = function (key) {
-        $timeout(function() {
+        $rootScope.$evalAsync(function() {
           $rootScope.$broadcast('$loadingStart', key);
+        });
+      };
+      
+      /**
+       * Update loading state by key with loadingOptions object
+       * @param {string} key
+       * @param {object} options
+       */
+      self.update = function (key, options) {
+        $rootScope.$evalAsync(function() {
+          $rootScope.$broadcast('$loadingUpdate', key, options);
         });
       };
 
@@ -74,7 +85,7 @@
        * @param {string} key
        */
       self.finish = function (key) {
-        $timeout(function() {
+        $rootScope.$evalAsync(function() {
           $rootScope.$broadcast('$loadingFinish', key);
         });
       };
@@ -102,6 +113,47 @@
               spinner.spin(spinnerContainer[0]);
             }
           };
+          
+          /**
+           * Update spinner, use force to update when loader is already started
+           */
+          var update = function (newOptions, force) {
+                finish();
+              
+                options = extend(true, {}, loadingOptions, newOptions);
+
+                // Build template
+                body = angular.element('<div></div>')
+                  .addClass('dw-loading-body');
+                container = angular.element('<div></div>')
+                  .addClass('dw-loading')
+                  .append(body);
+
+                if (options.overlay) {
+                  container.addClass('dw-loading-overlay');
+                }
+                if (options.className) {
+                  container.addClass(options.className);
+                }
+                if (options.spinner) {
+                  spinnerContainer = angular.element('<div></div>')
+                    .addClass('dw-loading-spinner');
+                  body.append(spinnerContainer);
+                  spinner = new Spinner(options.spinnerOptions);
+                }
+                if (options.text) {
+                  text = angular.element('<div></div>')
+                    .addClass('dw-loading-text')
+                    .text(options.text);
+                  body.append(text);
+                }
+                
+                element.append(container);
+                
+                if ( options.active || !key || force) {
+                    start();
+                }
+          };          
 
           /**
            * Stops spinner
@@ -116,47 +168,18 @@
           };
 
           scope.$watch(attrs.dwLoadingOptions, function (newOptions) {
-            finish();
-
-            options = extend(true, {}, loadingOptions, newOptions);
-
-            // Build template
-            body = angular.element('<div></div>')
-              .addClass('dw-loading-body');
-            container = angular.element('<div></div>')
-              .addClass('dw-loading')
-              .append(body);
-
-            if (options.overlay) {
-              container.addClass('dw-loading-overlay');
-            }
-            if (options.className) {
-              container.addClass(options.className);
-            }
-            if (options.spinner) {
-              spinnerContainer = angular.element('<div></div>')
-                .addClass('dw-loading-spinner');
-              body.append(spinnerContainer);
-              spinner = new Spinner(options.spinnerOptions);
-            }
-            if (options.text) {
-              text = angular.element('<div></div>')
-                .addClass('dw-loading-text')
-                .text(options.text);
-              body.append(text);
-            }
-
-            element.append(container);
-//            $compile(container)(scope);
-
-            if (options.active || !key) {
-              start();
-            }
+            update(newOptions);
           }, true);
 
           $rootScope.$on('$loadingStart', function (event, loadKey) {
             if (loadKey === key) {
               start();
+            }
+          });
+          
+          $rootScope.$on('$loadingUpdate', function (event, loadKey, options) {
+            if (loadKey === key) {
+              update(options, true);
             }
           });
 
