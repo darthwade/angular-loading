@@ -33,7 +33,7 @@ Add `angular-loading.min.js` and `angular-loading.css` to your HTML. Also add [s
 <link rel="stylesheet" type="text/css" href="//rawgithub.com/darthwade/angular-loading/master/angular-loading.css"/>
 ```
 
-Add `darthwade.loading` as a module dependency for your app.
+Add `darthwade.dwLoading` as a module dependency for your app.
 ``` javascript
 angular.module('myApp', ['darthwade.dwLoading']);
 ```
