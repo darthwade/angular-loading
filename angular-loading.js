@@ -147,7 +147,7 @@
                     .text(options.text);
                   body.append(text);
                 }
-                
+                angular.element('.dw-loading').remove();
                 element.append(container);
                 
                 if ( options.active || !key || force) {
