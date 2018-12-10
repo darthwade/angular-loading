@@ -101,6 +101,10 @@
             body,
             spinnerContainer,
             text;
+	
+		  attrs.$observe('dwLoading', function (val) {
+	        key = val || false;
+          });
 
           /**
            * Starts spinner
